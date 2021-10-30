@@ -20,6 +20,7 @@ endif
 UNAME_P := $(shell uname -p)
 
 %.o : %.cpp
+	@mkdir build bin
 	$(COMPILER) $(FLAGS) ${INCLUDE_LIBS_FOLDER} -c $< -o bin/$(notdir $@)
 
 $(TARGET) : $(OBJ)
