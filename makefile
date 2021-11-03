@@ -1,10 +1,11 @@
 COMPILER := g++
-FLAGS := -std=c++20
+FLAGS := -std=c++20 
 INCLUDE_LIBS_FOLDER := -I/usr/local/include
-LIBS :=
+LIBS := -pthread
 TARGET := app
+MAINFILE = main.cpp
 
-OBJ := $(patsubst %.cpp, %.o, $(shell find . -name '*.cpp'))
+OBJ := $(patsubst %.cpp, %.o, $(shell find src/ -name '*.cpp'))
 
 all : $(TARGET)
 
@@ -21,12 +22,12 @@ UNAME_P := $(shell uname -p)
 
 %.o : %.cpp
 	@mkdir -p build bin
-	${info Compiling...}
 	$(COMPILER) $(FLAGS) ${INCLUDE_LIBS_FOLDER} -c $< -o bin/$(notdir $@)
 
 $(TARGET) : $(OBJ)
-	$(COMPILER) ${FLAGS} ${INCLUDE_LIBS_FOLDER} $(shell find bin -name '*.o') -o build/$@.$(UNAME_P) $(LIBS)
+	$(COMPILER) $(FLAGS) ${INCLUDE_LIBS_FOLDER} -c ${MAINFILE} -o bin/mainFile.o
+	$(COMPILER) ${FLAGS} ${INCLUDE_LIBS_FOLDER} bin/mainFile.o $(shell find bin -name '*.o') -o build/$@.$(UNAME_P) $(LIBS)
 
 clean:
-	rm bin/*.o
-	rm build/*
+	rm -f bin/*.o
+	rm -f build/*
