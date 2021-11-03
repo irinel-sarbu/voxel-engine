@@ -1,5 +1,5 @@
-#ifndef SHADER_HPP
-#define SHADER_HPP
+#ifndef __SHADER_H__
+#define __SHADER_H__
 
 #include <string>
 
@@ -15,4 +15,4 @@ private:
   std::string parseFile(const std::string &filepath);
 };
 
-#endif
+#endif // __SHADER_H__

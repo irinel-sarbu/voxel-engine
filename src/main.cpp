@@ -14,6 +14,9 @@
 #include <string>
 #include <vector>
 
+#include "renderer/loader.hpp"
+#include "renderer/renderer.hpp"
+
 using namespace std;
 
 int main(int argc, const char *argv[]) {
@@ -49,21 +52,20 @@ int main(int argc, const char *argv[]) {
     printf("Unable to init GLEW!\n");
   }
 
-  std::vector<float> positions{-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
+  std::vector<float> vertices{
+      -0.5f, 0.5f, 0.0f,
+      -0.5f, -0.5f, 0.0f,
+      0.5f, -0.5f, 0.0f,
+      0.5f, 0.5f, 0.0f};
 
-  GLuint buffer;
-  glGenBuffers(1, &buffer);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer);
-  glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(float), &positions[0], GL_STATIC_DRAW);
+  std::vector<unsigned int> indices{
+      0, 1, 3,
+      3, 1, 2};
 
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
-  // glBindBuffer(GL_ARRAY_BUFFER, 0);
+  Loader loader;
+  Renderer renderer;
 
-  printf("Info:\n");
-  printf("\tOpenGL version: %s\n", glGetString(GL_VERSION));
-  printf("\tGPU vendor: %s\n", glGetString(GL_VENDOR));
-  printf("\tRenderer: %s\n", glGetString(GL_RENDERER));
+  RawModel model = loader.loadToVAO(vertices, indices);
 
   Shader shader("res/shaders/main.vert", "res/shaders/main.frag");
   shader.use();
@@ -71,9 +73,9 @@ int main(int argc, const char *argv[]) {
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
     /* Render here */
-    glClear(GL_COLOR_BUFFER_BIT);
+    renderer.prepare();
 
-    glDrawArrays(GL_TRIANGLES, 0, positions.size() / 2);
+    renderer.render(model);
 
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
