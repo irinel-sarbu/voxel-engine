@@ -1,6 +1,6 @@
 COMPILER := g++
 FLAGS := -std=c++20
-INCLUDE_LIBS_FOLDER := -I/usr/local/include -L/usr/local/lib
+INCLUDE_LIBS_FOLDER := -I/usr/local/include
 LIBS :=
 TARGET := app
 
@@ -20,7 +20,8 @@ endif
 UNAME_P := $(shell uname -p)
 
 %.o : %.cpp
-	@mkdir build bin
+	@mkdir -p build bin
+	${info Compiling...}
 	$(COMPILER) $(FLAGS) ${INCLUDE_LIBS_FOLDER} -c $< -o bin/$(notdir $@)
 
 $(TARGET) : $(OBJ)
