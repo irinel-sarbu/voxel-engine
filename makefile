@@ -1,5 +1,5 @@
 COMPILER := g++
-FLAGS := -std=c++20 
+FLAGS := -std=c++20 -O2
 INCLUDE_LIBS_FOLDER := -I/usr/local/include
 LIBS := -pthread
 TARGET := app

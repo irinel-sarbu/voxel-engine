@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 void Renderer::prepare() {
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::render(RawModel model) {
