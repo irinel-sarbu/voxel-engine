@@ -16,6 +16,7 @@ endif
 
 ifeq ($(UNAME_S), Darwin)
   LIBS += -framework OpenGL -lGLEW -lglfw
+	FLAGS += -arch x86_64
 endif
 
 UNAME_P := $(shell uname -p)

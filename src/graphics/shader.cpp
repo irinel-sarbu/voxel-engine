@@ -79,3 +79,8 @@ Shader::Shader(const std::string &vertShaderPath, const std::string &fragShaderP
 void Shader::use() {
   glUseProgram(id);
 }
+
+void Shader::setUniformMat4(const std::string &name, const Mat4 &mat) {
+  unsigned int mID = glGetUniformLocation(id, name.c_str());
+  glUniformMatrix4fv(mID, 1, GL_TRUE, &mat(0, 0));
+}
